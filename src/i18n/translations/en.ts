@@ -42,6 +42,23 @@ export const en = {
     exhaleShort: "out",
   },
 
+  // Completion Modal
+  completion: {
+    title: "Congratulations! 🎉",
+    subtitle: "You completed the breathing exercise",
+    rounds: "Rounds",
+    duration: "Duration",
+    streak: "Streak",
+    close: "Done",
+  },
+  // Focus Completion Modal
+  focusCompletion: {
+    title: "Focus Complete! 🎉",
+    subtitle: "Great job, you stayed focused!",
+    focusTime: "Focus Time",
+    close: "Close",
+    again: "Again",
+  },
   // Focus Screen
   focus: {
     title: "Focus Timer",
@@ -309,5 +326,87 @@ export const en = {
       section9Title: "9. Contact",
       section9Text: "For privacy questions: privacy@nefeskocu.app",
     },
+  },
+
+  // Statistics Screen
+  statistics: {
+    title: "Statistics",
+
+    // Summary cards
+    currentStreak: "Current Streak",
+    longestStreak: "Longest Streak",
+    totalSessions: "Total Sessions",
+    totalMinutes: "Total Minutes",
+    todayDuration: "Today's Duration",
+    stressReduction: "Stress Reduction",
+
+    // Time units
+    hourShort: "h",
+    minShort: "m",
+    secShort: "s",
+
+    // Day abbreviations
+    days: {
+      sun: "Sun",
+      mon: "Mon",
+      tue: "Tue",
+      wed: "Wed",
+      thu: "Thu",
+      fri: "Fri",
+      sat: "Sat",
+    },
+    weekLabel: "Week",
+
+    // Charts
+    progress: "Progress",
+    weeklyProgress: "Weekly Progress",
+    week: "Week",
+    month: "Month",
+    noData: "No data yet",
+    sessionsPerDay: "Sessions Per Day",
+    sessionsPerWeek: "Sessions Per Week",
+    minutesPerDay: "Minutes Per Day",
+    minutesPerWeek: "Minutes Per Week",
+
+    // Comparison
+    improvedBy: "Improved by:",
+    decreasedBy: "Decreased by:",
+    comparedToLastWeek: "compared to last week",
+
+    // Pattern analysis
+    techniqueAnalysis: "Technique Analysis",
+    mostUsedTechniques: "Most Used Techniques",
+    sessions: "sessions",
+    min: "min",
+
+    // Stress
+    stressTrend: "Stress Trend",
+    stressAfterSessions: "Post-Session Stress Level",
+
+    // Health integration
+    healthData: "Health Data",
+    connectHealth: "Health Connection",
+    connectHealthKit: "Connect Apple Health",
+    connectGoogleFit: "Connect Google Fit",
+    trackHeartRate: "Track your heart rate",
+    healthKitMessage:
+      "Connect to Apple Health to view your heart rate data. This helps you better analyze your stress levels.",
+    googleFitMessage:
+      "Connect to Google Fit to view your heart rate data. This helps you better analyze your stress levels.",
+    healthConnectMessage:
+      "Connect to health services to view your heart rate data.",
+    connect: "Connect",
+    healthConnected: "Health service connected successfully!",
+    healthConnectionFailed: "Connection failed. Please try again.",
+    heartRateTrend: "Heart Rate Trend",
+    noHeartRateData: "No heart rate data yet",
+
+    // Averages
+    averages: "Averages",
+    avgSessionDuration: "Avg. Session Duration",
+    sessionsThisWeek: "Sessions This Week",
+
+    // Favorite pattern
+    favoritePattern: "Favorite Technique",
   },
 };

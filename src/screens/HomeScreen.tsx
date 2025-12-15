@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import {
   View,
   Text,
@@ -29,6 +29,7 @@ import {
   X,
   Minus,
   Plus,
+  BarChart3,
 } from "lucide-react-native";
 import { HomeScreenProps } from "../types/navigation";
 import {
@@ -38,8 +39,8 @@ import {
   BreathingPattern,
   useTranslation,
 } from "../hooks";
-import { FloatingSoundButton } from "../components";
-import { useSettings } from "../context";
+import { FloatingSoundButton, Confetti, CompletionModal } from "../components";
+import { useSettings, useAnalytics } from "../context";
 
 const { width } = Dimensions.get("window");
 const CIRCLE_SIZE = Math.min(width * 0.7, 280);
@@ -133,8 +134,17 @@ function PhaseCircle({
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   const [showPatternModal, setShowPatternModal] = useState(false);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [completedSessionData, setCompletedSessionData] = useState<{
+    rounds: number;
+    duration: number;
+  } | null>(null);
   const { hapticEnabled } = useSettings();
   const { t } = useTranslation();
+  const { addSession } = useAnalytics();
+  const [sessionStartTime, setSessionStartTime] = useState<Date | null>(null);
+  const hasCompletedRef = useRef(false);
 
   const {
     phase,
@@ -187,9 +197,65 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     }
   }, [phase, phaseDuration, isPaused]);
 
+  // Check if target rounds completed
   useEffect(() => {
-    if (!isPlaying && cycleCount > 0) {
+    if (isPlaying && cycleCount >= targetRounds && !hasCompletedRef.current) {
+      hasCompletedRef.current = true;
+      // Save completed session data before stopping
+      const completedData = {
+        rounds: cycleCount,
+        duration: totalSessionTime,
+      };
+      setCompletedSessionData(completedData);
+
+      // Save to analytics
+      if (sessionStartTime) {
+        addSession({
+          date: sessionStartTime.toISOString(),
+          patternId: pattern.id,
+          patternName: pattern.name,
+          duration: Math.round(totalSessionTime),
+          rounds: cycleCount,
+          type: "breathing",
+        });
+        setSessionStartTime(null);
+      }
+
+      // Increment streak
       incrementStreak();
+
+      // Stop the session
+      stop();
+
+      // Show celebration
+      setShowConfetti(true);
+      setShowCompletionModal(true);
+    }
+  }, [cycleCount, targetRounds, isPlaying]);
+
+  // Reset completion flag when starting new session
+  useEffect(() => {
+    if (isPlaying && cycleCount === 0) {
+      hasCompletedRef.current = false;
+    }
+  }, [isPlaying, cycleCount]);
+
+  useEffect(() => {
+    // Only track manual stops (not auto-completion)
+    if (!isPlaying && cycleCount > 0 && !hasCompletedRef.current) {
+      incrementStreak();
+      // Save session to analytics
+      if (sessionStartTime) {
+        addSession({
+          date: sessionStartTime.toISOString(),
+          patternId: pattern.id,
+          patternName: pattern.name,
+          duration: Math.round(totalSessionTime),
+          rounds: cycleCount,
+          type: "breathing",
+        });
+        setSessionStartTime(null);
+      }
     }
   }, [isPlaying]);
 
@@ -232,9 +298,18 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   };
 
   const handlePlayPause = () => {
-    if (!isPlaying) start();
-    else if (isPaused) resume();
+    if (!isPlaying) {
+      setSessionStartTime(new Date());
+      hasCompletedRef.current = false;
+      start();
+    } else if (isPaused) resume();
     else pause();
+  };
+
+  const handleCompletionClose = () => {
+    setShowCompletionModal(false);
+    setShowConfetti(false);
+    setCompletedSessionData(null);
   };
 
   const selectPattern = (p: BreathingPattern) => {
@@ -263,6 +338,23 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
+      {/* Confetti Animation */}
+      <Confetti
+        isActive={showConfetti}
+        onComplete={() => setShowConfetti(false)}
+      />
+
+      {/* Completion Modal */}
+      <CompletionModal
+        visible={showCompletionModal}
+        onClose={handleCompletionClose}
+        patternName={pattern.name}
+        rounds={completedSessionData?.rounds || targetRounds}
+        duration={completedSessionData?.duration || totalSessionTime}
+        streak={streak}
+        t={t.completion}
+      />
+
       <View style={styles.content}>
         {/* Floating Sound Button */}
         <FloatingSoundButton style={styles.floatingSoundBtn} />
@@ -275,6 +367,14 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             activeOpacity={0.7}
           >
             <Settings color={COLORS.muted} size={24} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Statistics")}
+            style={styles.headerButton}
+            activeOpacity={0.7}
+          >
+            <BarChart3 color={COLORS.primary} size={24} />
           </TouchableOpacity>
 
           <TouchableOpacity

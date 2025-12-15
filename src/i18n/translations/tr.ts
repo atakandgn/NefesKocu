@@ -42,6 +42,25 @@ export const tr = {
     exhaleShort: "ver",
   },
 
+  // Completion Modal
+  completion: {
+    title: "Tebrikler! 🎉",
+    subtitle: "Nefes egzersizini başarıyla tamamladın",
+    rounds: "Tur",
+    duration: "Süre",
+    streak: "Seri",
+    close: "Tamam",
+  },
+
+  // Focus Completion Modal
+  focusCompletion: {
+    title: "Odak Tamamlandı! 🎉",
+    subtitle: "Harika iş, odaklı kaldın!",
+    focusTime: "Odak Süresi",
+    close: "Tamam",
+    again: "Tekrar",
+  },
+
   // Focus Screen
   focus: {
     title: "Odak Zamanlayıcı",
@@ -308,5 +327,87 @@ export const tr = {
       section9Title: "9. İletişim",
       section9Text: "Gizlilik sorularınız için: privacy@nefeskocu.app",
     },
+  },
+
+  // Statistics Screen
+  statistics: {
+    title: "İstatistikler",
+
+    // Summary cards
+    currentStreak: "Mevcut Seri",
+    longestStreak: "En Uzun Seri",
+    totalSessions: "Toplam Seans",
+    totalMinutes: "Toplam Dakika",
+    todayDuration: "Bugünkü Süre",
+    stressReduction: "Stres Azalması",
+
+    // Time units
+    hourShort: "sa",
+    minShort: "dk",
+    secShort: "sn",
+
+    // Day abbreviations
+    days: {
+      sun: "Paz",
+      mon: "Pzt",
+      tue: "Sal",
+      wed: "Çar",
+      thu: "Per",
+      fri: "Cum",
+      sat: "Cmt",
+    },
+    weekLabel: "Hafta",
+
+    // Charts
+    progress: "İlerleme",
+    weeklyProgress: "Haftalık İlerleme",
+    week: "Hafta",
+    month: "Ay",
+    noData: "Henüz veri yok",
+    sessionsPerDay: "Günlük Seans Sayısı",
+    sessionsPerWeek: "Haftalık Seans Sayısı",
+    minutesPerDay: "Günlük Dakika",
+    minutesPerWeek: "Haftalık Dakika",
+
+    // Comparison
+    improvedBy: "Artış:",
+    decreasedBy: "Azalış:",
+    comparedToLastWeek: "geçen haftaya göre",
+
+    // Pattern analysis
+    techniqueAnalysis: "Teknik Analizi",
+    mostUsedTechniques: "En Çok Kullanılan Teknikler",
+    sessions: "seans",
+    min: "dk",
+
+    // Stress
+    stressTrend: "Stres Trendi",
+    stressAfterSessions: "Seans Sonrası Stres Seviyesi",
+
+    // Health integration
+    healthData: "Sağlık Verileri",
+    connectHealth: "Sağlık Bağlantısı",
+    connectHealthKit: "Apple Health Bağla",
+    connectGoogleFit: "Google Fit Bağla",
+    trackHeartRate: "Kalp atış hızınızı takip edin",
+    healthKitMessage:
+      "Apple Health'e bağlanarak kalp atış hızı verilerinizi görebilirsiniz. Bu, stres seviyenizi daha iyi analiz etmenize yardımcı olur.",
+    googleFitMessage:
+      "Google Fit'e bağlanarak kalp atış hızı verilerinizi görebilirsiniz. Bu, stres seviyenizi daha iyi analiz etmenize yardımcı olur.",
+    healthConnectMessage:
+      "Sağlık servislerine bağlanarak kalp atış hızı verilerinizi görebilirsiniz.",
+    connect: "Bağlan",
+    healthConnected: "Sağlık servisi başarıyla bağlandı!",
+    healthConnectionFailed: "Bağlantı başarısız oldu. Lütfen tekrar deneyin.",
+    heartRateTrend: "Kalp Atış Hızı Trendi",
+    noHeartRateData: "Henüz kalp atış hızı verisi yok",
+
+    // Averages
+    averages: "Ortalamalar",
+    avgSessionDuration: "Ort. Seans Süresi",
+    sessionsThisWeek: "Bu Hafta Seans",
+
+    // Favorite pattern
+    favoritePattern: "Favori Teknik",
   },
 };

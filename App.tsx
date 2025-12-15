@@ -7,6 +7,7 @@ import * as Notifications from "expo-notifications";
 import AppNavigator from "./src/navigation/AppNavigator";
 import { SoundProvider } from "./src/context/SoundContext";
 import { SettingsProvider } from "./src/context/SettingsContext";
+import { AnalyticsProvider } from "./src/context/AnalyticsContext";
 
 // Configure notification handler for local notifications
 Notifications.setNotificationHandler({
@@ -78,10 +79,12 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <SettingsProvider>
-          <SoundProvider>
-            <StatusBar style="light" />
-            <AppNavigator />
-          </SoundProvider>
+          <AnalyticsProvider>
+            <SoundProvider>
+              <StatusBar style="light" />
+              <AppNavigator />
+            </SoundProvider>
+          </AnalyticsProvider>
         </SettingsProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

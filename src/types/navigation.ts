@@ -6,6 +6,7 @@ export type RootStackParamList = {
   Focus: undefined;
   Paywall: undefined;
   Settings: undefined;
+  Statistics: undefined;
 };
 
 export type OnboardingScreenProps = NativeStackScreenProps<
@@ -31,6 +32,11 @@ export type PaywallScreenProps = NativeStackScreenProps<
 export type SettingsScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "Settings"
+>;
+
+export type StatisticsScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "Statistics"
 >;
 
 declare global {

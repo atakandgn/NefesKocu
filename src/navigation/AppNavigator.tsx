@@ -8,6 +8,7 @@ import FocusScreen from "../screens/FocusScreen";
 import PaywallScreen from "../screens/PaywallScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import StatisticsScreen from "../screens/StatisticsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -79,6 +80,13 @@ export default function AppNavigator() {
           options={{
             animation: "slide_from_right",
             presentation: "modal",
+          }}
+        />
+        <Stack.Screen
+          name="Statistics"
+          component={StatisticsScreen}
+          options={{
+            animation: "slide_from_right",
           }}
         />
       </Stack.Navigator>

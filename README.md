@@ -29,6 +29,8 @@ A modern, feature-rich breathing exercise app built with React Native and Expo S
 - Beautiful ambient gradient animations
 - Session completion stats
 - Motivational messages
+- **Confetti celebration** on completion 🎊
+- **Completion modal** with session summary
 
 ### 🎵 Background Sounds
 
@@ -55,11 +57,34 @@ A modern, feature-rich breathing exercise app built with React Native and Expo S
 - 🇺🇸 English
 - Dynamic language switching
 
-### 📊 Progress Tracking
+### 📊 Advanced Analytics & Statistics
 
-- Daily streak counter
+- **Weekly & Monthly progress charts** (Bar charts)
+- **Today's duration tracking** with HH:MM:SS format
+- **Session statistics**:
+  - Total sessions & minutes
+  - Average session duration
+  - Stress reduction tracking
+- **Technique analysis** with Pie charts
+- **Pattern usage breakdown**
+- **Streak tracking** (current & longest)
+- **Health integration** (HealthKit/Google Fit ready)
+- **Heart rate trend** visualization
+- **Week/Month toggle** for different time periods
+
+### 🎉 Completion Celebrations
+
+- **Confetti animation** when completing target rounds
+- **Achievement modal** with session stats
+- Haptic feedback on completion
+- Quick restart or close options
+
+### 📈 Progress Tracking
+
+- Daily streak counter with fire icon 🔥
 - Session history
 - Motivational achievements
+- Real-time progress visualization
 
 ### ⚙️ Customization
 
@@ -140,23 +165,30 @@ NefesKocu/
 │   │   ├── SoundMixer.tsx          # Background sounds mixer
 │   │   ├── FloatingSoundButton.tsx # Quick sound access button
 │   │   ├── SessionControls.tsx     # Session control buttons
+│   │   ├── Charts.tsx              # Bar, Line, Pie charts & Progress Ring
+│   │   ├── Confetti.tsx            # Celebration confetti animation
+│   │   ├── CompletionModal.tsx     # Breathing session completion modal
+│   │   ├── FocusCompletionModal.tsx # Focus timer completion modal
 │   │   └── BannerAdPlaceholder.tsx # Ad placeholder
 │   │
 │   ├── screens/
 │   │   ├── HomeScreen.tsx          # Main breathing screen
 │   │   ├── FocusScreen.tsx         # Focus timer screen
+│   │   ├── StatisticsScreen.tsx    # Analytics & charts screen
 │   │   ├── SettingsScreen.tsx      # Settings & preferences
 │   │   ├── PaywallScreen.tsx       # Pro upgrade screen
 │   │   └── OnboardingScreen.tsx    # First-time user flow
 │   │
 │   ├── context/
 │   │   ├── SettingsContext.tsx     # App settings state
-│   │   └── SoundContext.tsx        # Sound playback state
+│   │   ├── SoundContext.tsx        # Sound playback state
+│   │   └── AnalyticsContext.tsx    # Session analytics & health data
 │   │
 │   ├── hooks/
 │   │   ├── useBreathingSession.ts  # Breathing logic hook
 │   │   ├── useStreak.ts            # Streak tracking hook
-│   │   └── useTranslation.ts       # i18n hook
+│   │   ├── useTranslation.ts       # i18n hook
+│   │   └── useAnalyticsData.ts     # Statistics & chart data hook
 │   │
 │   ├── i18n/
 │   │   ├── index.ts                # i18n exports
@@ -168,7 +200,8 @@ NefesKocu/
 │   │   └── AppNavigator.tsx        # Navigation setup
 │   │
 │   ├── services/
-│   │   └── NotificationService.ts  # Push notifications
+│   │   ├── NotificationService.ts  # Push notifications
+│   │   └── HealthService.ts        # HealthKit/Google Fit integration
 │   │
 │   └── types/
 │       └── navigation.ts           # TypeScript types
@@ -185,6 +218,7 @@ NefesKocu/
 | Language      | TypeScript 5.9                            |
 | Navigation    | React Navigation 7                        |
 | Animations    | React Native Reanimated 4                 |
+| Charts        | react-native-svg (custom components)      |
 | Audio         | expo-av                                   |
 | Haptics       | expo-haptics                              |
 | Notifications | expo-notifications                        |
@@ -203,6 +237,7 @@ NefesKocu/
   "expo-haptics": "~15.0.8",
   "expo-notifications": "~0.32.15",
   "react-native-reanimated": "~4.1.1",
+  "react-native-svg": "~15.11.2",
   "@react-navigation/native": "^7.1.0",
   "@react-navigation/native-stack": "^7.3.0"
 }

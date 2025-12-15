@@ -6,8 +6,8 @@ import {
   TouchableWithoutFeedback,
   AppState,
   AppStateStatus,
-  Alert,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
@@ -25,7 +25,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { FocusScreenProps } from "../types/navigation";
-import { FloatingSoundButton } from "../components";
+import {
+  FloatingSoundButton,
+  Confetti,
+  FocusCompletionModal,
+} from "../components";
 import { useTranslation } from "../hooks";
 
 const COLORS = {
@@ -86,6 +90,8 @@ export default function FocusScreen({ navigation }: FocusScreenProps) {
   const [selectedHours, setSelectedHours] = useState(0);
   const [selectedMinutes, setSelectedMinutes] = useState(30);
   const [messageIndex, setMessageIndex] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
   const appState = useRef(AppState.currentState);
   const backgroundTime = useRef<number | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -200,17 +206,21 @@ export default function FocusScreen({ navigation }: FocusScreenProps) {
   const handleTimerComplete = useCallback(() => {
     setIsActive(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    Alert.alert(
-      language === "tr" ? "Odak Tamamlandı! 🎉" : "Focus Complete! 🎉",
-      language === "tr"
-        ? "Harika iş, odaklandın!"
-        : "Great job, you stayed focused!",
-      [
-        { text: t.common.ok, onPress: () => navigation.goBack() },
-        { text: language === "tr" ? "Tekrar" : "Again", onPress: resetTimer },
-      ]
-    );
-  }, [navigation, language, t]);
+    setShowConfetti(true);
+    setShowCompletionModal(true);
+  }, []);
+
+  const handleCompletionClose = () => {
+    setShowCompletionModal(false);
+    setShowConfetti(false);
+    navigation.goBack();
+  };
+
+  const handleCompletionAgain = () => {
+    setShowCompletionModal(false);
+    setShowConfetti(false);
+    resetTimer();
+  };
 
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
@@ -307,6 +317,21 @@ export default function FocusScreen({ navigation }: FocusScreenProps) {
       locations={[0, 0.5, 1]}
       style={styles.container}
     >
+      {/* Confetti Animation */}
+      <Confetti
+        isActive={showConfetti}
+        onComplete={() => setShowConfetti(false)}
+      />
+
+      {/* Focus Completion Modal */}
+      <FocusCompletionModal
+        visible={showCompletionModal}
+        onClose={handleCompletionClose}
+        onAgain={handleCompletionAgain}
+        focusTime={initialDuration}
+        t={t.focusCompletion}
+      />
+
       {/* Floating Sound Button */}
       <FloatingSoundButton style={styles.floatingSoundBtn} />
 
